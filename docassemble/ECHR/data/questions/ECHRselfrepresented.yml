@@ -1,0 +1,816 @@
+---
+id: interview order
+mandatory: True
+code: |
+  info_screen
+  more_info
+  applicant_first_name
+  applicant_address.address
+  phone_number
+  states_against
+  victim
+  if not victim: 
+    not_victim_continue_anyway
+  complaint_against_state
+  if not complaint_against_state: 
+    complaint_not_against_state_continue_anyway
+  exhausted_remedies
+  if not exhausted_remedies: 
+    not_exhausted_remedies_continue_anyway
+    appeal_available_yesno
+  if exhausted_remedies:
+    final_decision_date_passed
+    if final_decision_date_passed:
+      final_decision_date_passed_continue_anyway
+  statement_of_facts
+  article_invoked
+  log( article_invoked["article_two"], 'console' )
+  if article_invoked["article_two"]:
+    article_two_explanation
+  if article_invoked["article_three"]:
+    article_three_explanation
+  if article_invoked["article_four"]:
+    article_four_explanation
+  if article_invoked["article_five"]:
+    article_five_explanation
+  if article_invoked["article_six"]:
+    article_six_explanation
+  if article_invoked["article_seven"]:
+    article_seven_explanation
+  if article_invoked["article_eight"]:
+    article_eight_explanation
+  if article_invoked["article_nine"]:
+    article_nine_explanation
+  if article_invoked["article_ten"]:
+    article_ten_explanation
+  if article_invoked["article_eleven"]:
+    article_eleven_explanation
+  if article_invoked["article_twelve"]:
+    article_twelve_explanation
+  if article_invoked["article_thirteen"]:
+    article_thirteen_explanation
+  if article_invoked["article_fourteen"]:
+    article_fourteen_explanation
+  if article_invoked["pro_article_one"]:
+    pro_article_one_explanation
+  if article_invoked["pro_article_two"]:
+    pro_article_two_explanation
+  if article_invoked["pro_article_three"]:
+    pro_article_three_explanation
+  if article_invoked["pro_thirteen"]:
+    pro_thirteen_explanation
+  appeal_available_yesno
+  another_procedure_yesno
+  other_applications_yesno
+  additional_comments
+  barcode
+  signature_date
+  applicant_signature
+  download
+---
+id: info screen
+question: |
+  Application to the European Court of Human Rights
+subquestion: |
+  This form is a formal legal document and may affect your rights and obligations. 
+  
+  Make sure you fill in all the fields applicable to your situation and provide all relevant documents.
+  
+  If a field is required in this form, it is required under [Rule 47](https://www.echr.coe.int/Documents/Rule_47_ENG.pdf) of the Court, which sets out the information and documents that must be provided.
+  
+  Tap the **{green words}** in any screen for a definition or more information.
+
+continue button field: info_screen
+terms:
+  green words: |
+    Green words are legal terms or a short way of reffering to something that needs more explaination. The definition or explanation pops up when you tap the green words. 
+---
+id: more info 
+question: |
+  Specific Information About Applying to the European Court of Human Rights
+subquestion: |
+  You do not need to be a national of [one of the States bound by the Convention](https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/005/signatures). The violation you are complaining of must simply have been committed by one of those States against a person within its {jurisdiction}.
+  
+  **The Court is not empowered to overrule national decisions or annul national laws.**
+continue button field: more_info
+terms:
+  jurisdiction: |
+    This usually means on a State's territory.
+---
+id: victim 
+question: |
+  Were you directly and personally the victim of the violation you are alleging?
+fields:
+  - no label: victim
+    datatype: yesnoradio
+---
+id: victim warning
+question: |
+  Warning
+subquestion: |
+  **It is likely that your applicantion will be deemed inadmissable if you were not directly and personally the victim of the violation you are alleging.**
+  
+  You cannot make a general complaint about a law or a measure, for example because it seems unfair; nor can you complain on behalf of other people (unless they are clearly identified and you are their official representative).
+  
+  You said you were not directly and personally the victim of the violation you are alleging.
+  
+  You can still proceed with the application, but it is likely that your applicantion will be deemed inadmissable if you were not directly and personally the victim of the violation you are alleging.
+buttons:
+  - Keep going:
+      code: |
+        not_victim_continue_anyway = True  
+  - Restart: restart
+  - Exit: exit
+---
+id: complaint against state 
+question: |
+  Is the act or omission complained of attributable to one or more {public authorities} in the State(s) concerned?
+fields:
+  - no label: complaint_against_state
+    datatype: yesnoradio
+terms:
+  public authorities: |
+    For example, a court or an administrative authority.
+---
+id: complaint against state warning
+question: |
+  Warning
+subquestion: |
+  **It is likely that your applicantion will be deemed inadmissable if the act or omission complained of is not attributable to one or more {public authorities} in the State(s) concerned.**
+  
+  The Court cannot deal with complaints against individuals or {private institutions}.
+    
+  You said the act or omission complained of is not attributable to one or more {public authorities} in the State(s) concerned.
+  
+  You can still proceed with the application, but it is likely that your applicantion will be deemed inadmissable.
+terms:
+  public authorities: |
+    For example, a court or an administrative authority.
+  private institutions: |
+    Such as commercial companies.
+buttons:
+  - Keep going:
+      code: |
+        complaint_not_against_state_continue_anyway = True  
+  - Restart: restart
+  - Exit: exit
+---
+id: exhausting domestic remedies 
+question: |
+  Have you used all the remedies in the State concerned that could provide redress for the situation you are complaining about?
+subquestion: |
+  It is not enough merely to make use of domestic remedies, but you must also have actually raised your {complaints}.
+fields:
+  - no label: exhausted_remedies
+    datatype: yesnoradio
+terms:
+  complaints: |
+    The substance of the Convention violations you are alleging.
+---
+id: has not exhausted domestic remedies warning
+question: |
+  Warning
+subquestion: |
+  **It is likely that your applicantion will be deemed inadmissable if you have not exhausted all domestic remedies available.**
+  
+  You said you have not exhausted all of the domestic remedies in the State concerned for the situtation you are complaining about.
+  
+  You can still proceed with the application, but it is recommended that you exhaust all domestic remedies available to your complaints before applying to the Court.
+buttons:
+  - Keep going:
+      code: |
+        not_exhausted_remedies_continue_anyway = True  
+  - Restart: restart
+  - Exit: exit
+---
+id: 6 months 
+question: |
+  Was {the final decision at the domestic level} taken before ${ format_date( current_datetime() - date_interval(months=6) ) }?
+fields:
+  - no label: final_decision_date_passed
+    datatype: yesnoradio 
+terms:
+  the final decision at the domestic level: |
+    Generally speaking, the judgment of the highest court.
+---
+id: 6 months warning
+question: |
+  Warning
+subquestion: |
+  **It is likely that your applicantion will be deemed inadmissable if {the final decision at the domestic level} was taken more than 6 months ago.**
+  
+  You said the final decision at the domestic level was taken before **${ format_date( current_datetime() - date_interval(months=6) ) }**. That was more than 6 months ago.
+  
+  You may still proceed with the application, but it is likely that your applicantion will be deemed inadmissable.
+terms:
+  the final decision at the domestic level: |
+    Generally speaking, the judgment of the highest court.
+buttons:
+  - Keep going:
+      code: |
+        final_decision_date_passed_continue_anyway = True  
+  - Restart: restart
+  - Exit: exit
+---
+id: individual applicant information
+question:  |
+  Individual Applicant Information
+fields:
+  - First name: applicant_first_name
+  - Surname: applicant_surname
+  - Birthdate: birthdate
+    datatype: date
+  - Birth place: birthplace
+  - Nationality: nationality
+  - Sex: sex
+    datatype: radio
+    choices:
+      - Male: male
+      - Female: female
+---
+objects:
+  applicant_address: Address
+---
+id: applicant address
+question: |
+  What is your address?
+fields:
+  - Address: applicant_address.address
+    address autocomplete: True
+  - Unit: applicant_address.unit
+    required: False
+  - City: applicant_address.city
+  - State: applicant_address.state
+    required: False
+  - Postal Code: applicant_address.postal_code
+    required: False
+  - Country: applicant_address.country
+    code: |
+      countries_list()
+---
+id:  applicant contact information
+question: |
+  What is your contact information?
+subquestion: |
+  Include the international dialling code when entering your phone number. 
+fields:  
+  - Phone number: phone_number
+  - Email address: email    
+    datatype: email
+    required: False
+---
+id:  state(s)
+question: |
+  Select the State(s) against which the application is directed
+fields:
+  - no label: states_against
+    datatype: checkboxes
+    choices:
+    - Albania: ALB
+    - Andorra: AND
+    - Armenia: ARM
+    - Austria: AUT
+    - Azerbaijan: AZE
+    - Belgium: BEL
+    - Bulgaria: BGR
+    - Bosnia and Herzegovina: BIH
+    - Switzerland: CHE
+    - Cyprus: CYP
+    - Czech Republic: CZE
+    - Germany: DEU
+    - Denmark: DNK
+    - Spain: ESP
+    - Estonia: EST
+    - Finland: FIN
+    - France: FRA
+    - United Kingdom: GBR
+    - Georgia: GEO
+    - Greece: GRC
+    - Croatia: HRV
+    - Hungary: HUN
+    - Ireland: IRL
+    - Iceland: ISL
+    - Italy: ITA
+    - Liechtenstein: LIE
+    - Lithuania: LTU
+    - Luxembourg: LUX
+    - Latvia: LVA
+    - Monaco: MCO
+    - Republic of Moldova: MDA
+    - North Macedonia: MKD
+    - Malta: MLT
+    - Montenegro: MNE
+    - Netherlands: NLD
+    - Norway: NOR
+    - Poland: POL
+    - Portugal: PRT
+    - Romania: ROU
+    - Russian Federation: RUS
+    - San Marino: SMR
+    - Serbia: SRB
+    - Slovak Republic: SVK
+    - Slovenia: SVN
+    - Sweden: SWE
+    - Turkey: TUR
+    - Ukraine: UKR
+    none of the above: False 
+---
+id: statement of facts
+question: |
+  Statement of Facts 
+subquestion: |
+  In {chronological} order, state the facts relevant to your complaint. 
+fields: 
+  - no label: statement_of_facts
+    datatype: area 
+terms:
+  chronological: |
+    The order in which the events occurred.
+---
+id: articles concerned
+question: |
+  Select the Articles of the Convention that your application concerns. 
+subquestion: |
+  In order to be admissible, you should have exhausted all available domestic remedies in the State(s) concerned regarding your complaint(s). 
+fields: 
+  - no label: article_invoked
+    datatype: checkboxes
+    choices: 
+      - Article 2, the right to life: article_two
+      - Article 3, freedom from torture: article_three
+      - Article 4, freedom from slavery: article_four
+      - Article 5, the right to liberty: article_five
+      - Article 6, the right to a fair trial: article_six
+      - Article 7, the right not to be punished for something that wasn’t against the law at the time: article_seven
+      - Article 8, the right to respect for family and private life: article_eight
+      - Article 9, freedom of thought, conscience and religion: article_nine
+      - Article 10, freedom of expression: article_ten
+      - Article 11, freedom of assembly: article_eleven
+      - Article 12, the right to marry and start a family: article_twelve
+      - Article 13, right to an effective remedy: article_thirteen
+      - Article 14, the right not to be discriminated against in respect to any of these rights: article_fourteen
+      - Protocol 1, Article 1, the right to protection of property: pro_article_one
+      - Protocol 1, Article 2, the right to education: pro_article_two
+      - Protocol 1, Article 3, the right to participate in free elections: pro_article_three
+      - Protocol 13, the abolition of the death penalty: pro_thirteen
+    min: 1
+    none of the above: False 
+---
+id: article 2
+question: |
+  Article 2
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 2 was violated: article_two_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 2: article_two_compliance
+    datatype: area
+---
+id: article 3
+question: |
+  Article 3
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 3 was violated: article_three_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 3: article_three_compliance
+    datatype: area
+---
+id: article 4
+question: |
+  Article 4
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 4 was violated: article_four_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 4: article_four_compliance
+    datatype: area
+---
+id: article 5
+question: |
+  Article 5
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 5 was violated: article_five_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 5: article_five_compliance
+    datatype: area
+---
+id: article 6
+question: |
+  Article 6
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 6 was violated: article_six_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 6: article_six_compliance
+    datatype: area
+---
+id: article 7
+question: |
+  Article 7
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 7 was violated: article_seven_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 7: article_seven_compliance
+    datatype: area
+---
+id: article 8
+question: |
+  Article 8
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 8 was violated: article_eight_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 8: article_eight_compliance
+    datatype: area
+---
+id: article 9
+question: |
+  Article 9
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 9 was violated: article_nine_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 9: article_nine_compliance
+    datatype: area
+---
+id: article 10
+question: |
+  Article 10
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 10 was violated: article_ten_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 10: article_ten_compliance
+    datatype: area
+---
+id: article 11
+question: |
+  Article 11
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 11 was violated: article_eleven_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 11: article_eleven_compliance
+    datatype: area
+---
+id: article 12
+question: |
+  Article 12
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 12 was violated: article_twelve_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 12: article_twelve_compliance
+    datatype: area
+---
+id: article 13
+question: |
+  Article 13
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 13 was violated: article_thirteen_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 13: article_thirteen_compliance
+    datatype: area
+---
+id: article 14
+question: |
+  Article 14
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Article 14 was violated: article_fourteen_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Article 14: article_fourteen_compliance
+    datatype: area
+---
+id: protocol 1, article 1
+question: |
+  Protocol 1, Article 1
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Protocol 1, Article 1 was violated: pro_article_one_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 1: pro_article_one_compliance
+    datatype: area
+---
+id: protocol 1, article 2
+question: |
+  Protocol 1, Article 2
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Protocol 1, Article 2 was violated: pro_article_two_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 2: pro_article_two_compliance
+    datatype: area
+---
+id: protocol 1, article 3
+question: |
+  Protocol 1, Article 3
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Protocol 1, Article 3 was violated: pro_article_three_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 3: pro_article_three_compliance
+    datatype: area
+---
+id: protocol 13
+question: |
+  Protocol 13
+subquestion: |
+  For each article you are complaining under, describe your compliance with the Court's requirement that you:
+    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
+    2. Apply within 6 months of the {final decision} at the domestic level.
+fields: 
+  - Explain how Protocol 13 was violated: pro_thirteen_explanation
+    datatype: area
+  - Explain how you complied with the Court's requirements regarding your complaint under Protocol 13: pro_thirteen_compliance
+    datatype: area
+--- 
+id: exhaustion of remedies 
+question: |
+  Is or was there an appeal remedy available to you which you have not used? 
+fields:
+  - no label: appeal_available_yesno
+    datatype: yesnoradio
+  - Which appeal or remedy have you not used and why not?: why_no_appeal
+    datatype: area
+    show if: 
+      variable: appeal_available_yesno
+      is: True
+--- 
+id: other international proceedings 
+question: |
+  Have you raised any of these complaints in another procedure of international investigation or settlement? 
+fields:
+  - no label: another_procedure_yesno
+    datatype: yesnoradio
+  - Give a summary of the procedure including the complaints submitted, name of the international body, and date and nature of any decisions.: another_procedure_summary
+    datatype: area
+    show if: 
+      variable: another_procedure_yesno
+      is: True
+--- 
+id: previous applications
+question: |
+  Do you currently have, or have you previously had, any other applications before the Court? 
+fields:
+  - no label: other_applications_yesno
+    datatype: yesnoradio
+  - What are the relevant application numbers?: other_application_numbers
+    datatype: area
+    show if: 
+      variable: other_applications_yesno
+      is: True
+--- 
+id: additional comments
+question: |
+  You may include any additional comments about your application.  
+fields:
+  - no label: additional_comments
+    datatype: area
+---
+id: prior info
+question: |
+  Prior Information 
+fields: 
+  - Have you already received a sheet of barcode labels from the European Court of Human Rights?: barcode 
+    datatype: yesnoradio
+  - note: |
+      When you download and print this form, attach one barcode label at the top of the first page. ADD PICTURE. 
+    show if:
+      variable: barcode
+      is: True
+  - Have you already received a reference number from the Court in relation to these complaints?: reference
+    datatype: yesnoradio
+  - Reference number: reference_number
+    show if:
+      variable: reference
+      is: True
+---
+id: signature date
+question: |
+  When do you plan to download, print, and mail these forms to the Court?
+subquestion: |
+  We automatically answer "today" for you, below. You can change the date.
+fields: 
+  - Date: signature_date
+    datatype: date
+    default: ${today().format("dd-MM-yyyy")}
+---
+question: |
+  Sign your name
+signature: applicant_signature
+under: |
+  ${ applicant_first_name + " " + applicant_surname }
+---
+id: download final form
+event: download
+question: |
+  Here is your document. 
+  
+  ${ Application_Form_ENG.pdf }
+
+attachment code: Application_Form_ENG
+buttons:
+  - Exit: exit
+  - Restart: restart
+progress: 100
+---
+code: |
+  applicant_signature_yesno = True
+---
+id: attachment block
+attachment: 
+  name: Application Form ENG
+  variable name: Application_Form_ENG
+  skip undefined: True
+  pdf template file: Application_Form_ENG.pdf
+  fields:
+    - "reference": ${ reference_number }
+    - "applicant_surname": ${ applicant_surname }
+    - "applicant_first_name": ${ applicant_first_name }
+    - "birthdate": ${ birthdate.format("dd-MM-yyyy") }
+    - "birthplace": ${ birthplace }
+    - "nationality": ${ nationality }
+    - "applicant_address": ${ applicant_address }
+    - "phone_number": ${ phone_number }
+    - "email": ${ email }
+    - "male": ${ sex == 'male' }
+    - "female": ${ sex == 'female' }
+    - "ALB": ${ states_against[ "ALB" ] }
+    - "AND": ${ states_against[ "AND" ] }
+    - "ARM": ${ states_against[ "ARM" ] }
+    - "AUT": ${ states_against[ "AUT" ] }
+    - "AZE": ${ states_against[ "AZE" ] }
+    - "BEL": ${ states_against[ "BEL" ] }
+    - "BGR": ${ states_against[ "BGR" ] }
+    - "BIH": ${ states_against[ "BIH" ] }
+    - "CHE": ${ states_against[ "CHE" ] }
+    - "CYP": ${ states_against[ "CYP" ] }
+    - "CZE": ${ states_against[ "CZE" ] }
+    - "DEU": ${ states_against[ "DEU" ] }
+    - "DNK": ${ states_against[ "DNK" ] }
+    - "ESP": ${ states_against[ "ESP" ] }
+    - "EST": ${ states_against[ "EST" ] }
+    - "FIN": ${ states_against[ "FIN" ] }
+    - "FRA": ${ states_against[ "FRA" ] }
+    - "GBR": ${ states_against[ "GBR" ] }
+    - "GEO": ${ states_against[ "GEO" ] }
+    - "GRC": ${ states_against[ "GRC" ] }
+    - "HRV": ${ states_against[ "HRV" ] }
+    - "HUN": ${ states_against[ "HUN" ] }
+    - "IRL": ${ states_against[ "IRL" ] }
+    - "ISL": ${ states_against[ "ISL" ] }
+    - "ITA": ${ states_against[ "ITA" ] }
+    - "LIE": ${ states_against[ "LIE" ] }
+    - "LTU": ${ states_against[ "LTU" ] }
+    - "LUX": ${ states_against[ "LUX" ] }
+    - "LVA": ${ states_against[ "LVA" ] }
+    - "MCO": ${ states_against[ "MCO" ] }
+    - "MDA": ${ states_against[ "MDA" ] }
+    - "MKD": ${ states_against[ "MKD" ] }
+    - "MLT": ${ states_against[ "MLT" ] }
+    - "MNE": ${ states_against[ "MNE" ] }
+    - "NLD": ${ states_against[ "NLD" ] }
+    - "NOR": ${ states_against[ "NOR" ] }
+    - "POL": ${ states_against[ "POL" ] }
+    - "PRT": ${ states_against[ "PRT" ] }
+    - "ROU": ${ states_against[ "ROU" ] }
+    - "RUS": ${ states_against[ "RUS" ] }
+    - "SMR": ${ states_against[ "SMR" ] }
+    - "SRB": ${ states_against[ "SRB" ] }
+    - "SVK": ${ states_against[ "SVK" ] }
+    - "SVN": ${ states_against[ "SVN" ] }
+    - "SWE": ${ states_against[ "SWE" ] }
+    - "TUR": ${ states_against[ "TUR" ] }
+    - "UKR": ${ states_against[ "UKR" ] }
+    - "statement_of_facts": ${ statement_of_facts }
+    - "article_two": ${ "Article Two" if article_invoked['article_two'] else "" }
+    - "article_three#0": ${ article_invoked == 'article_three' }
+    - "article_four#0": ${ article_invoked == 'article_four' }
+    - "article_five#0": ${ article_invoked == 'article_five' }
+    - "article_six#0": ${ article_invoked == 'article_six' }
+    - "article_seven#0": ${ article_invoked == 'article_seven' }
+    - "article_eight#0": ${ article_invoked == 'article_eight' }
+    - "article_nine#0": ${ article_invoked == 'article_nine' }
+    - "article_ten#0": ${ article_invoked == 'article_ten' }
+    - "article_eleven#0": ${ article_invoked == 'article_eleven' }
+    - "article_twelve#0": ${ article_invoked == 'article_twelve' }
+    - "article_thirteen#0": ${ article_invoked == 'article_thirteen' }
+    - "article_fourteen#0": ${ article_invoked == 'article_fourteen' }
+    - "pro_article_one#0": ${ article_invoked == 'pro_article_one' }
+    - "pro_article_two#0": ${ article_invoked == 'pro_article_two' }
+    - "pro_article_three#0": ${ article_invoked == 'pro_article_three' }
+    - "pro_thirteen#0": ${ article_invoked == 'pro_thirteen' }
+    - "article_two_explanation": ${ article_two_explanation }
+    - "article_three_explanation": ${ article_three_explanation }
+    - "article_four_explanation": ${ article_four_explanation }
+    - "article_five_explanation": ${ article_five_explanation }
+    - "article_six_explanation": ${ article_six_explanation }
+    - "article_seven_explanation": ${ article_seven_explanation }
+    - "article_eight_explanation": ${ article_eight_explanation }
+    - "article_nine_explanation": ${ article_nine_explanation }
+    - "article_ten_explanation": ${ article_ten_explanation }
+    - "article_eleven_explanation": ${ article_eleven_explanation }
+    - "article_twelve_explanation": ${ article_twelve_explanation }
+    - "article_thirteen_explanation": ${ article_thirteen_explanation }
+    - "article_fourteen_explanation": ${ article_fourteen_explanation }
+    - "pro_article_one_explanation": ${ pro_article_one_explanation }
+    - "pro_article_two_explanation": ${ pro_article_two_explanation }
+    - "pro_article_three_explanation": ${ pro_article_three_explanation }
+    - "pro_thirteen_explanation": ${ pro_thirteen_explanation }
+    - "article_two#1": ${ article_invoked == 'article_two' }
+    - "article_three#1": ${ article_invoked == 'article_three' }
+    - "article_four#1": ${ article_invoked == 'article_four' }
+    - "article_five#1": ${ article_invoked == 'article_five' }
+    - "article_six#1": ${ article_invoked == 'article_six' }
+    - "article_seven#1": ${ article_invoked == 'article_seven' }
+    - "article_eight#1": ${ article_invoked == 'article_eight' }
+    - "article_nine#1": ${ article_invoked == 'article_nine' }
+    - "article_ten#1": ${ article_invoked == 'article_ten' }
+    - "article_eleven#1": ${ article_invoked == 'article_eleven' }
+    - "article_twelve#1": ${ article_invoked == 'article_twelve' }
+    - "article_thirteen#1": ${ article_invoked == 'article_thirteen' }
+    - "article_fourteen#1": ${ article_invoked == 'article_fourteen' }
+    - "pro_article_one#1": ${ article_invoked == 'pro_article_one' }
+    - "pro_article_two#1": ${ article_invoked == 'pro_article_two' }
+    - "pro_article_three#1": ${ article_invoked == 'pro_article_three' }
+    - "pro_thirteen#1": ${ article_invoked == 'pro_thirteen' }
+    - "article_two_compliance": ${ article_two_compliance }
+    - "article_three_compliance": ${ article_three_compliance }
+    - "article_four_compliance": ${ article_four_compliance }
+    - "article_five_compliance": ${ article_five_compliance }
+    - "article_six_compliance": ${ article_six_compliance }
+    - "article_seven_compliance": ${ article_seven_compliance }
+    - "article_eight_compliance": ${ article_eight_compliance }
+    - "article_nine_compliance": ${ article_nine_compliance }
+    - "article_ten_compliance": ${ article_ten_compliance }
+    - "article_eleven_compliance": ${ article_eleven_compliance }
+    - "article_twelve_compliance": ${ article_twelve_compliance }
+    - "article_thirteen_compliance": ${ article_thirteen_compliance }
+    - "article_fourteen_compliance": ${ article_fourteen_compliance }
+    - "pro_article_one_compliance": ${ pro_article_one_compliance }
+    - "pro_article_two_compliance": ${ pro_article_two_compliance }
+    - "pro_article_three_compliance": ${ pro_article_three_compliance }
+    - "pro_thirteen_compliance": ${ pro_thirteen_compliance }
+    - "appeal_available_yesno": ${ appeal_available_yesno }
+    - "why_no_appeal": ${ why_no_appeal }
+    - "another_procedure_yesno": ${ another_procedure_yesno }
+    - "another_procedure_summary": ${ another_procedure_summary }
+    - "other_application_numbers": ${ other_application_numbers }
+    - "other_applications_yesno": ${ other_applications_yesno }
+    - "additional_comments": ${ additional_comments }
+    - "signature_date": ${ signature_date.format("dd-MM-yyyy") }
+    - "applicant_signature_yesno": ${ applicant_signature_yesno }
+    - "applicant_signature_es_:signer:signature": ${ applicant_signature }  

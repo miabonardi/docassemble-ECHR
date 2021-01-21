@@ -1,0 +1,191 @@
+
+---
+id: interview order
+mandatory: True
+code: |
+  info_screen
+  barcode
+  applicant_type
+  if applicant_type == "individual":
+    applicant_first_name
+    applicant_address.address
+    applicant_phone_number
+  if represented:
+    represenative_address.address
+    representative_phone_number
+  #download
+---
+id: info screen
+question: |
+  Application to the European Court of Human Rights
+subquestion: |
+  This form is a formal legal document and may affect your rights and obligations. 
+  
+  Make sure you fill in all the fields applicable to your situation and provide all relevant documents.
+  
+  If a field is required in this form, it is required under [Rule 47](https://www.echr.coe.int/Documents/Rule_47_ENG.pdf) of the Court, which sets out the information and documents that must be provided.
+  
+  Tap the **{green words}** in any screen for a definition or more information.
+
+continue button field: info_screen
+terms:
+  green words: |
+    Green words are legal terms or a short way of reffering to something that needs more explaination. The definition or explanation pops up when you tap the green words. 
+---
+id: prior info
+question: |
+  Prior Information 
+fields: 
+  - Have you already received a sheet of barcode labels from the European Court of Human Rights?: barcode 
+    datatype: yesnoradio
+  - note: |
+      When you download and print this form, attach one barcode label at the top of the first page. ADD PICTURE. 
+    show if:
+      variable: barcode
+      is: True
+  - Have you already received a reference number from the Court in relation to these complaints?: reference
+    datatype: yesnoradio
+  - Reference number: reference_number
+    show if:
+      variable: reference
+      is: True
+---
+id: applicant info
+question: |
+  Are you an **{Individual}** or an **{Organization}**?
+fields:
+  - no label: applicant_type
+    input type: radio
+    choices:
+      - Individual: individual
+      - Organization: organization
+terms:
+  Individual: |
+    Applicants who are individual persons only. 
+  Organization: |
+    Applicants that are a company, NGO, association, or other legal entity. 
+---
+id: individual applicant information
+question:  |
+  Individual Applicant Information
+fields:
+  - First name: applicant_first_name
+  - Surname: applicant_surname
+  - Birthdate: birthdate
+    datatype: date
+  - Birth place: birthplace
+  - Nationality: nationality
+  - Sex: sex
+    datatype: radio
+    choices:
+      - Male: male
+      - Female: female
+---
+objects:
+  applicant_address: Address
+  represenative_address: Address
+---
+id: applicant address
+question: |
+  What is your address?
+fields:
+  - Address: applicant_address.address
+    address autocomplete: True
+  - Unit: applicant_address.unit
+    required: False
+  - City: applicant_address.city
+  - State: applicant_address.state
+    required: False
+  - Postal Code: applicant_address.postal_code
+    required: False
+  - Country: applicant_address.country
+    code: |
+      countries_list()
+---
+id: representative address
+question: |
+  What is your representative's address?
+fields:
+  - Address: represenative_address.address
+    address autocomplete: True
+  - Unit: represenative_address.unit
+    required: False
+  - City: represenative_address.city
+  - State: represenative_address.state
+    required: False
+  - Postal Code: represenative_address.postal_code
+    required: False
+  - Country: represenative_address.country
+    code: |
+      countries_list()
+---
+id:  applicant contact information
+question: |
+  What is your contact information?
+subquestion: |
+  Include the international dialling code when entering your phone number. 
+fields:  
+  - Phone number: applicant_phone_number
+  - Email address: applicant_email    
+    datatype: email
+    required: False
+---
+id: representative contact information
+question: |
+  What is your representative's contact information?
+subquestion: |
+  Include the international dialling code when entering the phone number. 
+fields:  
+  - Phone number: representative_phone_number
+  - Fax number: representative_fax_number
+  - Email address: representative_email  
+    datatype: email
+  - Is this the email address your representative would like to use for eComms?: ecomms_yesno
+    datatype: yesnoradio
+  - no label: ecomms_agreement
+    datatype: checkboxes
+    minlength: 1
+    choices:
+      - I agree to use the eComms system.
+    show if:
+      variable: ecomms_yesno
+      is: True 
+    validation messages:
+      minlength: |
+        You said this is the email address your representative would like to use for eComms. You cannot continue unless you agree to use the eComms system.
+  - What email address would your representative like to use for eComms?: ecomms_email
+    datatype: email
+    show if:
+      variable: ecomms_yesno
+      is: False 
+---
+id: representation
+question: |
+  Are you represented by a lawyer or {non-lawyer}?
+subquestion: |
+  An individual applicant does not have to be represented by a lawyer at this stage.
+fields:  
+  - no label: represented
+    datatype: yesnoradio
+terms:
+  non-lawyer: |
+    e.g. a relative, friend, or guardian
+---
+#---
+#id: download final form
+#event: download
+#question: |
+#  Here is your document. 
+#  
+#  ${ Application_Form_ENG.docx }
+#
+#attachment code: Application_Form_ENG
+#buttons:
+#  - Exit: exit
+#  - Restart: restart
+#progress: 100
+#---
+#attachment: 
+#  name: Application Form ENG
+#  docx template file: Application_Form_ENG.docx
+#  variable name: Application_Form_ENG
