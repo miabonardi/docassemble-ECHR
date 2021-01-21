@@ -24,7 +24,6 @@ code: |
       final_decision_date_passed_continue_anyway
   statement_of_facts
   article_invoked
-  log( article_invoked["article_two"], 'console' )
   if article_invoked["article_two"]:
     article_two_explanation
   if article_invoked["article_three"]:
@@ -619,6 +618,7 @@ question: |
 fields:
   - no label: additional_comments
     datatype: area
+    required: False
 ---
 id: prior info
 question: |
@@ -736,23 +736,23 @@ attachment:
     - "TUR": ${ states_against[ "TUR" ] }
     - "UKR": ${ states_against[ "UKR" ] }
     - "statement_of_facts": ${ statement_of_facts }
-    - "article_two": ${ "Article Two" if article_invoked['article_two'] else "" }
-    - "article_three#0": ${ article_invoked == 'article_three' }
-    - "article_four#0": ${ article_invoked == 'article_four' }
-    - "article_five#0": ${ article_invoked == 'article_five' }
-    - "article_six#0": ${ article_invoked == 'article_six' }
-    - "article_seven#0": ${ article_invoked == 'article_seven' }
-    - "article_eight#0": ${ article_invoked == 'article_eight' }
-    - "article_nine#0": ${ article_invoked == 'article_nine' }
-    - "article_ten#0": ${ article_invoked == 'article_ten' }
-    - "article_eleven#0": ${ article_invoked == 'article_eleven' }
-    - "article_twelve#0": ${ article_invoked == 'article_twelve' }
-    - "article_thirteen#0": ${ article_invoked == 'article_thirteen' }
-    - "article_fourteen#0": ${ article_invoked == 'article_fourteen' }
-    - "pro_article_one#0": ${ article_invoked == 'pro_article_one' }
-    - "pro_article_two#0": ${ article_invoked == 'pro_article_two' }
-    - "pro_article_three#0": ${ article_invoked == 'pro_article_three' }
-    - "pro_thirteen#0": ${ article_invoked == 'pro_thirteen' }
+    - "article_two_0": ${ "Article Two" if article_invoked['article_two'] else "" }
+    - "article_three_0": ${ "Article Three" if article_invoked['article_three'] else "" }
+    - "article_four_0": ${ "Article Four" if article_invoked['article_four'] else "" }
+    - "article_five_0": ${ "Article Five" if article_invoked['article_five'] else "" }
+    - "article_six_0": ${ "Article Six" if article_invoked['article_six'] else "" }
+    - "article_seven_0": ${ "Article Seven" if article_invoked['article_seven'] else "" }
+    - "article_eight_0": ${ "Article Eight" if article_invoked['article_eight'] else "" }
+    - "article_nine_0": ${ "Article Nine" if article_invoked['article_nine'] else "" }
+    - "article_ten_0": ${ "Article Ten" if article_invoked['article_ten'] else "" }
+    - "article_eleven_0": ${ "Article Eleven" if article_invoked['article_eleven'] else "" }
+    - "article_twelve_0": ${ "Article Twelve" if article_invoked['article_twelve'] else "" }
+    - "article_thirteen_0": ${ "Article Thirteen" if article_invoked['article_thirteen'] else "" }
+    - "article_fourteen_0": ${ "Article Fourteen" if article_invoked['article_fourteen'] else "" }
+    - "pro_article_one_0": ${ "Protocol 1, Article 1" if article_invoked['pro_article_one'] else "" }
+    - "pro_article_two_0": ${ "Protocol 1, Article 2" if article_invoked['pro_article_two'] else "" }
+    - "pro_article_three_0": ${ "Protocol 1, Article 3" if article_invoked['pro_article_three'] else "" }
+    - "pro_thirteen_0": ${ "Protocol 13" if article_invoked['pro_thirteen'] else "" }
     - "article_two_explanation": ${ article_two_explanation }
     - "article_three_explanation": ${ article_three_explanation }
     - "article_four_explanation": ${ article_four_explanation }
@@ -770,23 +770,23 @@ attachment:
     - "pro_article_two_explanation": ${ pro_article_two_explanation }
     - "pro_article_three_explanation": ${ pro_article_three_explanation }
     - "pro_thirteen_explanation": ${ pro_thirteen_explanation }
-    - "article_two#1": ${ article_invoked == 'article_two' }
-    - "article_three#1": ${ article_invoked == 'article_three' }
-    - "article_four#1": ${ article_invoked == 'article_four' }
-    - "article_five#1": ${ article_invoked == 'article_five' }
-    - "article_six#1": ${ article_invoked == 'article_six' }
-    - "article_seven#1": ${ article_invoked == 'article_seven' }
-    - "article_eight#1": ${ article_invoked == 'article_eight' }
-    - "article_nine#1": ${ article_invoked == 'article_nine' }
-    - "article_ten#1": ${ article_invoked == 'article_ten' }
-    - "article_eleven#1": ${ article_invoked == 'article_eleven' }
-    - "article_twelve#1": ${ article_invoked == 'article_twelve' }
-    - "article_thirteen#1": ${ article_invoked == 'article_thirteen' }
-    - "article_fourteen#1": ${ article_invoked == 'article_fourteen' }
-    - "pro_article_one#1": ${ article_invoked == 'pro_article_one' }
-    - "pro_article_two#1": ${ article_invoked == 'pro_article_two' }
-    - "pro_article_three#1": ${ article_invoked == 'pro_article_three' }
-    - "pro_thirteen#1": ${ article_invoked == 'pro_thirteen' }
+    - "article_two_1": ${ "Article Two" if article_invoked['article_two'] else "" }
+    - "article_three_1": ${ "Article Three" if article_invoked['article_three'] else "" }
+    - "article_four_1": ${ "Article Four" if article_invoked['article_four'] else "" }
+    - "article_five_1": ${ "Article Five" if article_invoked['article_five'] else "" }
+    - "article_six_1": ${ "Article Six" if article_invoked['article_six'] else "" }
+    - "article_seven_1": ${ "Article Seven" if article_invoked['article_seven'] else "" }
+    - "article_eight_1": ${ "Article Eight" if article_invoked['article_eight'] else "" }
+    - "article_nine_1": ${ "Article Nine" if article_invoked['article_nine'] else "" }
+    - "article_ten_1": ${ "Article Ten" if article_invoked['article_ten'] else "" }
+    - "article_eleven_1": ${ "Article Eleven" if article_invoked['article_eleven'] else "" }
+    - "article_twelve_1": ${ "Article Twelve" if article_invoked['article_twelve'] else "" }
+    - "article_thirteen_1": ${ "Article Thirteen" if article_invoked['article_thirteen'] else "" }
+    - "article_fourteen_1": ${ "Article Fourteen" if article_invoked['article_fourteen'] else "" }
+    - "pro_article_one_1": ${ "Protocol 1, Article 1" if article_invoked['pro_article_one'] else "" }
+    - "pro_article_two_1": ${ "Protocol 1, Article 2" if article_invoked['pro_article_two'] else "" }
+    - "pro_article_three_1": ${ "Protocol 1, Article 3" if article_invoked['pro_article_three'] else "" }
+    - "pro_thirteen_1": ${ "Protocol 13" if article_invoked['pro_thirteen'] else "" }
     - "article_two_compliance": ${ article_two_compliance }
     - "article_three_compliance": ${ article_three_compliance }
     - "article_four_compliance": ${ article_four_compliance }
@@ -805,12 +805,15 @@ attachment:
     - "pro_article_three_compliance": ${ pro_article_three_compliance }
     - "pro_thirteen_compliance": ${ pro_thirteen_compliance }
     - "appeal_available_yesno": ${ appeal_available_yesno }
+    - "appeal_available_noyes": ${ not appeal_available_yesno }
     - "why_no_appeal": ${ why_no_appeal }
     - "another_procedure_yesno": ${ another_procedure_yesno }
+    - "another_procedure_noyes": ${ not another_procedure_yesno }
     - "another_procedure_summary": ${ another_procedure_summary }
     - "other_application_numbers": ${ other_application_numbers }
     - "other_applications_yesno": ${ other_applications_yesno }
+    - "other_applications_noyes": ${ not other_applications_yesno }
     - "additional_comments": ${ additional_comments }
     - "signature_date": ${ signature_date.format("dd-MM-yyyy") }
     - "applicant_signature_yesno": ${ applicant_signature_yesno }
-    - "applicant_signature_es_:signer:signature": ${ applicant_signature }  
+    - "applicant_signature": ${ applicant_signature }  
