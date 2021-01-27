@@ -159,7 +159,7 @@ buttons:
 ---
 id: exhausting domestic remedies 
 question: |
-  Have you used all the remedies in the State concerned that could provide redress for the situation you are complaining about?
+  Have you used all the remedies in ${ states_against.true_values() } that could provide redress for the situation you are complaining about?
 subquestion: |
   It is not enough merely to make use of domestic remedies, but you must also have actually raised your {complaints}.
 fields:
@@ -187,7 +187,7 @@ buttons:
 ---
 id: 6 months 
 question: |
-  Was {the final decision at the domestic level} taken before ${ format_date( current_datetime() - date_interval(months=6) ) }?
+  Was {the final decision at the domestic level} taken before ${ format_date(current_datetime() - date_interval(months=6) ) }?
 fields:
   - no label: final_decision_date_passed
     datatype: yesnoradio 
@@ -203,6 +203,8 @@ subquestion: |
   
   You said the final decision at the domestic level was taken before **${ format_date( current_datetime() - date_interval(months=6) ) }**. That was more than 6 months ago.
   
+  Under [Rule 47](https://www.echr.coe.int/Documents/Rule_47_ENG.pdf), the date your application is postmarked cannot be more than 6 months after the final decision at the domestic level was taken. For this calculation, we assume you plan to mail your application today, **${ current_datetime() }**. 
+    
   You can still proceed with your application, but it may be deemed inadmissable.
 terms:
   the final decision at the domestic level: |
@@ -216,7 +218,7 @@ buttons:
 ---
 id: individual applicant information
 question:  |
-  Individual Applicant Information
+  Tell us about you
 fields:
   - First name: applicant_first_name
   - Surname: applicant_surname
@@ -369,6 +371,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+    
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 2 was violated: article_two_explanation
     datatype: area
@@ -387,6 +391,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 3 was violated: article_three_explanation
     datatype: area
@@ -405,6 +411,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 4 was violated: article_four_explanation
     datatype: area
@@ -423,6 +431,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 5 was violated: article_five_explanation
     datatype: area
@@ -441,6 +451,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 6 was violated: article_six_explanation
     datatype: area
@@ -459,6 +471,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 7 was violated: article_seven_explanation
     datatype: area
@@ -477,6 +491,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 8 was violated: article_eight_explanation
     datatype: area
@@ -495,6 +511,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 9 was violated: article_nine_explanation
     datatype: area
@@ -513,6 +531,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 10 was violated: article_ten_explanation
     datatype: area
@@ -531,6 +551,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 11 was violated: article_eleven_explanation
     datatype: area
@@ -549,6 +571,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 12 was violated: article_twelve_explanation
     datatype: area
@@ -567,6 +591,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 13 was violated: article_thirteen_explanation
     datatype: area
@@ -585,6 +611,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Article 14 was violated: article_fourteen_explanation
     datatype: area
@@ -603,6 +631,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Protocol 1, Article 1 was violated: pro_article_one_explanation
     datatype: area
@@ -621,6 +651,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Protocol 1, Article 2 was violated: pro_article_two_explanation
     datatype: area
@@ -639,6 +671,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Protocol 1, Article 3 was violated: pro_article_three_explanation
     datatype: area
@@ -657,6 +691,8 @@ subquestion: |
     1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
     
     2. Apply within 6 months of the {final decision} at the domestic level.
+        
+  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
 fields: 
   - Explain how Protocol 13 was violated: pro_thirteen_explanation
     datatype: area
@@ -722,7 +758,15 @@ fields:
 --- 
 id: accompanying documents
 question: |
-  Upload copies of all documents.
+  You may supplement the information in your application by attaching further details on the facts, alleged violations of the Convention, and the relevant arguments. 
+  
+  Such supplemental information should not exceed 20 pages.
+  
+  Also include: 
+  
+    - copies of documents relating to the decisions or measures complained of, judicial or otherwise;
+    - copies of documents and decisions showing that you have complied with the exhaustion of domestic remedies requirement and the time-limit contained in Article 35 § 1 of the Convention;
+    - where appropriate, copies of documents relating to any other procedure of international investigation or settlement;
 fields:
   - Documents: applicant_document
     datatype: file
@@ -779,6 +823,8 @@ subquestion: |
   Council of Europe[BR]
   67075 STRASBOURG CEDEX[BR]
   FRANCE[BR]
+  
+  You must keep the Court informed of any change of address and of all circumstances relevant to your application.
   
   ${ Application_Form_ENG_download }
 
