@@ -74,6 +74,12 @@ question: |
 subquestion: |
   This form is a formal legal document and may affect your rights and obligations. 
   
+  This form is intended to be used by self-represented individual applicants.
+  
+  Although you do not need to be represented by a lawyer in the first stages of the proceedings, you will need a lawyer once your application has been notified to the Government. The great majority of applications are, however, declared inadmissible without being notified to the government. 
+  
+  After you submit your application, you may apply for legal aid. 
+  
   Make sure you fill in all the fields applicable to your situation and provide all relevant documents.
   
   If a field is required in this form, it is required under [Rule 47](https://www.echr.coe.int/Documents/Rule_47_ENG.pdf) of the Court, which sets out the information and documents that must be provided.
@@ -92,6 +98,8 @@ question: |
   Applying to the Court
 subquestion: |
   You do not need to be a national of [one of the States bound by the Convention](https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/005/signatures). The violation you are complaining of must simply have been committed by one of those States against a person within its {jurisdiction}.
+  
+    Your application must relate to one of the rights set out in the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf).
   
   **The Court is not empowered to overrule national decisions or annul national laws.**
 continue button field: more_info
@@ -112,7 +120,7 @@ question: |
 subquestion: |
   **Your applicantion may be deemed inadmissable if you were not directly and personally the victim of the violation you are alleging.**
   
-  You cannot make a general complaint about a law or a measure, for example because it seems unfair; nor can you complain on behalf of other people (unless they are clearly identified and you are their official representative).
+  You must be able to show that you were “directly affected” by the measure complained of. You cannot make a {general complaint} about a law or a measure.
   
   You said you were not directly and personally the victim of the violation you are alleging.
   
@@ -123,6 +131,9 @@ buttons:
         not_victim_continue_anyway = True  
   - Restart: restart
   - Exit: exit
+terms:
+  general complaint: |
+    For example, because a law or measure seems unfair.
 ---
 id: complaint against state 
 question: |
@@ -159,13 +170,15 @@ buttons:
 ---
 id: exhausting domestic remedies 
 question: |
-  Have you used all the remedies in ${ states_against.true_values() } that could provide redress for the situation you are complaining about?
+  Have you used {all the remedies} in ${ states_against.true_values() } that could provide redress for the situation you are complaining about?
 subquestion: |
   It is not enough merely to make use of domestic remedies, but you must also have actually raised your {complaints}.
 fields:
   - no label: exhausted_remedies
     datatype: yesnoradio
 terms:
+  all the remedies: |
+    Usually this will mean an application to the appropriate court, followed by an appeal, where applicable, and even a further appeal to a higher court such as the supreme court or constitutional court, if there is one.
   complaints: |
     The substance of the Convention violations you are alleging.
 ---
@@ -337,6 +350,8 @@ id: articles concerned
 question: |
   Select the Articles of the Convention that your application concerns. 
 subquestion: |
+  You cannot complain of a violation of any legal instrument other than the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf). 
+  
   In order to be admissible, you should have exhausted all available domestic remedies in ${ states_against.true_values() } regarding your complaint(s). 
 fields: 
   - no label: article_invoked
@@ -760,17 +775,33 @@ id: accompanying documents
 question: |
   You may supplement the information in your application by attaching further details on the facts, alleged violations of the Convention, and the relevant arguments. 
   
-  Such supplemental information should not exceed 20 pages.
+  Any additional submissions, presented as a separate document, must not exceed 20 pages and should:
   
-  Also include: 
+    - be in an {A4 page format} with a margin of not less than 3.5 cm wide;
+    - be wholly legible and, if typed, the text should be at least 12 pt in the body of the document and 10 pt in the footnotes, with 1.5 line spacing;
+    - have all numbers expressed as figures; 
+    - **have pages numbered consecutively**;   
+    - be divided into numbered paragraphs;
+    - be divided into headings corresponding to "Facts", "Complaints or statements of violations" and "Information about the exhaustion of domestic remedies and compliance with the time-limit set out in Article 35 § 1".
+    
+  **These only develop and cannot replace the statement of facts, complaints and compliance with the admissibility criteria that must be on the application form itself.**
   
-    - copies of documents relating to the decisions or measures complained of, judicial or otherwise;
-    - copies of documents and decisions showing that you have complied with the exhaustion of domestic remedies requirement and the time-limit contained in Article 35 § 1 of the Convention;
-    - where appropriate, copies of documents relating to any other procedure of international investigation or settlement;
+  You must also include the relevant documents: 
+
+    - relating to the decisions or measures complained of;
+    - showing that the applicant has complied with the exhaustion of available domestic remedies and the time-limit contained in Article 35 § 1 of the Convention;
+    - showing, where applicable, information regarding other international proceedings.
+
+  If you are unable to provide a copy of any of these documents, you must provide an adequate explanation for why you cannot. Merely stating that you encountered difficulties in obtaining the documents will not suffice if it can be {reasonably expected} for the explanation to be supported by documentary evidence. If the explanation is not forthcoming or adequate, the application will not be allocated to a judicial formation.
 fields:
   - Documents: applicant_document
     datatype: file
   - Describe this document: applicant_document_description
+terms:
+  A4 page format: |
+    A4 measures 210 × 297 millimeters.
+  reasonably expected: |
+    Such as proof of indigence, a refusal of an authority to furnish a decision, or otherwise demonstrating your inability to access the documents.
 ---
 id: prior info
 question: |
@@ -807,9 +838,14 @@ fields:
 ---
 question: |
   Sign your name
+subquestion: |
+  This application form cannot be signed {per procurationem}.
 signature: applicant_signature
 under: |
   ${ applicant_first_name + " " + applicant_surname }
+terms:
+  per procurationem: |
+    by proxy or on behalf of someone else, (p.p.)
 ---
 id: download final form
 event: download
@@ -825,6 +861,10 @@ subquestion: |
   FRANCE[BR]
   
   You must keep the Court informed of any change of address and of all circumstances relevant to your application.
+  
+  The Registry may ask you for additional documents, information or explanations relating to your complaints.
+  
+  Failure, within the specified time-limit, to provide further information or documents at the Court’s request or to comply with the Court’s directions as to the form or manner of the lodging of an application may result in the complaint(s) not being examined by the Court or the application(s) being declared inadmissible or struck out of the Court’s list of cases.
   
   ${ Application_Form_ENG_download }
 
