@@ -346,6 +346,28 @@ terms:
   chronological: |
     The order in which the events occurred.
 ---
+#depends on: states_against
+#code: |
+#  all_article_options = {
+#    "article_two": "Article 2, the right to life",
+#    "article_two": "Article 2, the right to life",
+#  }
+#  actual_acticle_options = DADict()  #??
+#  for article_option in all_article_options:
+#    if not foo and not bar:
+#      actual_acticle_options.add_new_item( article_option )
+---
+#...
+#fields:
+#  - Article 2, the right to life: article_2
+#  datatype: yesno
+#  - Article 3, the right to life: article_3
+#  datatype: yesno
+#  show if: ${ not states_against[ "Slovak Republic" ] or  }
+#---
+objects:
+  - article_invoked: DADict.using(auto_gather=False)
+---
 id: articles concerned
 question: |
   Select the Articles of the Convention that your application concerns. 
@@ -354,28 +376,54 @@ subquestion: |
   
   In order to be admissible, you should have exhausted all available domestic remedies in ${ states_against.true_values() } regarding your complaint(s). 
 fields: 
-  - no label: article_invoked
-    datatype: checkboxes
-    choices: 
-      - Article 2, the right to life: article_two
-      - Article 3, freedom from torture: article_three
-      - Article 4, freedom from slavery: article_four
-      - Article 5, the right to liberty: article_five
-      - Article 6, the right to a fair trial: article_six
-      - Article 7, the right not to be punished for something that wasn’t against the law at the time: article_seven
-      - Article 8, the right to respect for family and private life: article_eight
-      - Article 9, freedom of thought, conscience and religion: article_nine
-      - Article 10, freedom of expression: article_ten
-      - Article 11, freedom of assembly: article_eleven
-      - Article 12, the right to marry and start a family: article_twelve
-      - Article 13, right to an effective remedy: article_thirteen
-      - Article 14, the right not to be discriminated against in respect to any of these rights: article_fourteen
-      - Protocol 1, Article 1, the right to protection of property: pro_article_one
-      - Protocol 1, Article 2, the right to education: pro_article_two
-      - Protocol 1, Article 3, the right to participate in free elections: pro_article_three
-      - Protocol 13, the abolition of the death penalty: pro_thirteen
-    min: 1
-    none of the above: False 
+  - Article 2, the right to life: article_invoked["article_two"]
+    datatype: yesno
+  - Article 3, freedom from torture: article_invoked["article_three"]
+    datatype: yesno
+  #    not states_against["Serbia"] and not False
+  #- no label: article_invoked
+  #  datatype: checkboxes
+  #  choices: 
+  #    - Article 2, the right to life: article_two
+  #    - Article 3, freedom from torture: article_three
+  - Article 4, freedom from slavery: article_invoked["article_four"]
+    datatype: yesno
+  - Article 5, the right to liberty: article_invoked["article_five"]
+    datatype: yesno
+  - Article 6, the right to a fair trial: article_invoked["article_six"]
+    datatype: yesno
+  - Article 7, the right not to be punished for something that wasn’t against the law at the time: article_invoked["article_seven"]
+    datatype: yesno
+  - Article 8, the right to respect for family and private life: article_invoked["article_eight"]
+    datatype: yesno
+  - Article 9, freedom of thought, conscience and religion: article_invoked["article_nine"]
+    datatype: yesno
+  - Article 10, freedom of expression: article_invoked["article_ten"]
+    datatype: yesno
+  - Article 11, freedom of assembly: article_invoked["article_eleven"]
+    datatype: yesno
+  - Article 12, the right to marry and start a family: article_invoked["article_twelve"]
+    datatype: yesno
+  - Article 13, right to an effective remedy: article_invoked["article_thirteen"]
+    datatype: yesno
+  - Article 14, the right not to be discriminated against in respect to any of these rights: article_invoked["article_fourteen"]
+    datatype: yesno
+  - Protocol 1, Article 1, the right to protection of property: article_invoked["pro_article_one"]
+    datatype: yesno
+    hide if:
+      code: |
+        states_against["Monaco"]
+  - Protocol 1, Article 2, the right to education: article_invoked["pro_article_two"]
+    datatype: yesno
+  - Protocol 1, Article 3, the right to participate in free elections: article_invoked["pro_article_three"]
+    datatype: yesno
+  - Protocol 13, the abolition of the death penalty: article_invoked["pro_thirteen"]
+    datatype: yesno
+    hide if:
+      code: |
+        states_against["Russian Federation"] or states_against["Armenia"]
+  #  min: 1
+  #  none of the above: False 
 ---
 id: article 2
 question: |
