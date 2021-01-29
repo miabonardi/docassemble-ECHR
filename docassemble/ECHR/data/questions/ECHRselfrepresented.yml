@@ -50,13 +50,13 @@ code: |
     article_thirteen_explanation
   if article_invoked["article_fourteen"]:
     article_fourteen_explanation
-  if article_invoked["pro_article_one"]:
+  if not states_against["Monaco"] and article_invoked["pro_article_one"]:
     pro_article_one_explanation
-  if article_invoked["pro_article_two"]:
+  if not states_against["Monaco"] and article_invoked["pro_article_two"]:
     pro_article_two_explanation
-  if article_invoked["pro_article_three"]:
+  if not states_against["Monaco"] and article_invoked["pro_article_three"]:
     pro_article_three_explanation
-  if article_invoked["pro_thirteen"]:
+  if not states_against["Russian Federation"] and not states_against["Armenia"] and not states_against["Azerbaijan"] and article_invoked["pro_thirteen"]:
     pro_thirteen_explanation
   appeal_available_yesno
   another_procedure_yesno
@@ -346,25 +346,6 @@ terms:
   chronological: |
     The order in which the events occurred.
 ---
-#depends on: states_against
-#code: |
-#  all_article_options = {
-#    "article_two": "Article 2, the right to life",
-#    "article_two": "Article 2, the right to life",
-#  }
-#  actual_acticle_options = DADict()  #??
-#  for article_option in all_article_options:
-#    if not foo and not bar:
-#      actual_acticle_options.add_new_item( article_option )
----
-#...
-#fields:
-#  - Article 2, the right to life: article_2
-#  datatype: yesno
-#  - Article 3, the right to life: article_3
-#  datatype: yesno
-#  show if: ${ not states_against[ "Slovak Republic" ] or  }
-#---
 objects:
   - article_invoked: DADict.using(auto_gather=False)
 ---
@@ -380,12 +361,6 @@ fields:
     datatype: yesno
   - Article 3, freedom from torture: article_invoked["article_three"]
     datatype: yesno
-  #    not states_against["Serbia"] and not False
-  #- no label: article_invoked
-  #  datatype: checkboxes
-  #  choices: 
-  #    - Article 2, the right to life: article_two
-  #    - Article 3, freedom from torture: article_three
   - Article 4, freedom from slavery: article_invoked["article_four"]
     datatype: yesno
   - Article 5, the right to liberty: article_invoked["article_five"]
@@ -415,15 +390,19 @@ fields:
         states_against["Monaco"]
   - Protocol 1, Article 2, the right to education: article_invoked["pro_article_two"]
     datatype: yesno
+    hide if:
+      code: |
+        states_against["Monaco"]
   - Protocol 1, Article 3, the right to participate in free elections: article_invoked["pro_article_three"]
     datatype: yesno
+    hide if:
+      code: |
+        states_against["Monaco"]
   - Protocol 13, the abolition of the death penalty: article_invoked["pro_thirteen"]
     datatype: yesno
     hide if:
       code: |
-        states_against["Russian Federation"] or states_against["Armenia"]
-  #  min: 1
-  #  none of the above: False 
+        states_against["Russian Federation"] or states_against["Armenia"] or states_against["Azerbaijan"]
 ---
 id: article 2
 question: |
@@ -821,6 +800,8 @@ fields:
 --- 
 id: accompanying documents
 question: |
+  Upload your documents
+subquestion: |
   You may supplement the information in your application by attaching further details on the facts, alleged violations of the Convention, and the relevant arguments. 
   
   Any additional submissions, presented as a separate document, must not exceed 20 pages and should:
@@ -828,11 +809,11 @@ question: |
     - be in an {A4 page format} with a margin of not less than 3.5 cm wide;
     - be wholly legible and, if typed, the text should be at least 12 pt in the body of the document and 10 pt in the footnotes, with 1.5 line spacing;
     - have all numbers expressed as figures; 
-    - **have pages numbered consecutively**;   
+    - have pages numbered consecutively;   
     - be divided into numbered paragraphs;
     - be divided into headings corresponding to "Facts", "Complaints or statements of violations" and "Information about the exhaustion of domestic remedies and compliance with the time-limit set out in Article 35 § 1".
     
-  **These only develop and cannot replace the statement of facts, complaints and compliance with the admissibility criteria that must be on the application form itself.**
+  **These documents only develop and cannot replace the statement of facts, complaints and compliance with the admissibility criteria that must be on the application form itself.**
   
   You must also include the relevant documents: 
 
