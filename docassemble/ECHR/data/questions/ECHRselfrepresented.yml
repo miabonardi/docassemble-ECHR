@@ -50,11 +50,11 @@ code: |
     article_thirteen_explanation
   if article_invoked["article_fourteen"]:
     article_fourteen_explanation
-  if not states_against["Monaco"] and article_invoked["pro_article_one"]:
+  if not states_against["Monaco"] and not states_against["Switzerland"] and article_invoked["pro_article_one"]:
     pro_article_one_explanation
-  if not states_against["Monaco"] and article_invoked["pro_article_two"]:
+  if not states_against["Monaco"] and not states_against["Switzerland"] and article_invoked["pro_article_two"]:
     pro_article_two_explanation
-  if not states_against["Monaco"] and article_invoked["pro_article_three"]:
+  if not states_against["Monaco"] and not states_against["Switzerland"] and article_invoked["pro_article_three"]:
     pro_article_three_explanation
   if not states_against["Russian Federation"] and not states_against["Armenia"] and not states_against["Azerbaijan"] and article_invoked["pro_thirteen"]:
     pro_thirteen_explanation
@@ -387,17 +387,17 @@ fields:
     datatype: yesno
     hide if:
       code: |
-        states_against["Monaco"]
+        states_against["Monaco"] or states_against["Switzerland"]
   - Protocol 1, Article 2, the right to education: article_invoked["pro_article_two"]
     datatype: yesno
     hide if:
       code: |
-        states_against["Monaco"]
+        states_against["Monaco"] or states_against["Switzerland"]
   - Protocol 1, Article 3, the right to participate in free elections: article_invoked["pro_article_three"]
     datatype: yesno
     hide if:
       code: |
-        states_against["Monaco"]
+        states_against["Monaco"] or states_against["Switzerland"]
   - Protocol 13, the abolition of the death penalty: article_invoked["pro_thirteen"]
     datatype: yesno
     hide if:
