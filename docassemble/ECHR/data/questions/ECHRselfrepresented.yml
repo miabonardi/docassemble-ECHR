@@ -17,11 +17,10 @@ code: |
   exhausted_remedies
   if not exhausted_remedies: 
     not_exhausted_remedies_continue_anyway
-    appeal_available_yesno
-  if exhausted_remedies:
-    final_decision_date_passed
-    if final_decision_date_passed:
-      final_decision_date_passed_continue_anyway
+  appeal_available_yesno
+  final_decision_date_passed
+  if final_decision_date_passed:
+    final_decision_date_passed_continue_anyway
   statement_of_facts
   article_invoked
   if article_invoked["article_two"]:
