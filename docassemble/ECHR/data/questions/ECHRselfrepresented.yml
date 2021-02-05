@@ -8,6 +8,9 @@ code: |
   applicant_address.address
   phone_number
   states_against
+  already_heard
+  if already_heard: 
+    already_heard_continue_anyway
   victim
   if not victim: 
     not_victim_continue_anyway
@@ -69,8 +72,10 @@ code: |
 ---
 id: info screen
 question: |
-  Application to the European Court of Human Rights
+  ${ ECHR_logo.show(width='20em') }
 subquestion: |
+  **Individual Application to the European Court of Human Rights**
+  
   This form is a formal legal document and may affect your rights and obligations. 
   
   This form is intended to be used by self-represented individual applicants.
@@ -92,19 +97,56 @@ terms:
   green words: |
     Green words are legal terms or a short way of reffering to something that needs more explaination. The definition or explanation pops up when you tap the green words. 
 ---
+objects:
+  - ECHR_logo: DAStaticFile.using(filename='ECHR_logo.png', alt_text='ECHR Logo')
+---
 id: more info 
 question: |
-  Applying to the Court
+  ${ ECHR_logo.show(width='20em') }
 subquestion: |
+  **Applying to the Court**
+  
   You do not need to be a national of [one of the States bound by the Convention](https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/005/signatures). The violation you are complaining of must simply have been committed by one of those States against a person within its {jurisdiction}.
   
-    Your application must relate to one of the rights set out in the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf).
+  Your application must relate to one or more of the rights set out in the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf) and Protocols.
+    
+  Your complaints must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-  **The Court is not empowered to overrule national decisions or annul national laws.**
+  The Court is not empowered to overrule national decisions or annul national laws.
+  
+  As a general rule, any information contained in the application form and documents which are lodged with the Registry, including information about the applicant or third parties, will be **accessible to the public**. Moreover, such information may be accessible on the Internet via the Court’s HUDOC database if the Court includes it in a statement of facts prepared for the notification of the case to the respondent Government, a decision on admissibility or striking out, or a judgment. Accordingly, you should only provide such details concerning your private life or that of third parties as are essential for an understanding of the case.
+  
+  In addition, if you do not wish your identity to be disclosed to the public, you must say so and set out the reasons for such a departure from the normal rule of public access to information in the proceedings. The Court may authorise anonymity in exceptional and duly justified cases.
 continue button field: more_info
 terms:
   jurisdiction: |
     This usually means on a State's territory.
+---
+id: already heard
+question: |
+  Have your complant(s) already been examined by the Court or another international body? 
+fields:
+  - no label: already_heard
+    datatype: yesnoradio
+---
+id: already heard warning
+question: |
+  Warning
+subquestion: |
+  **Your applicantion may be deemed inadmissable if your complaint(s) have already been examined by the Court or another international body.**
+  
+  You said you that your complaint(s) have already been examined by the Court or another international body.
+  
+  You can still proceed with your application, but it may be deemed inadmissable.
+buttons:
+  - Keep going:
+      code: |
+        already_heard_continue_anyway = True  
+  - Restart: restart
+  - Exit: exit
+terms:
+  general complaint: |
+    For example, because a law or measure seems unfair.
 ---
 id: victim 
 question: |
@@ -119,7 +161,9 @@ question: |
 subquestion: |
   **Your applicantion may be deemed inadmissable if you were not directly and personally the victim of the violation you are alleging.**
   
-  You must be able to show that you were “directly affected” by the measure complained of. You cannot make a {general complaint} about a law or a measure.
+  You must be able to show that you were “directly affected” by the measure complained of and that the matters about which you complain have interfered unjustifiably with a fundamental right. You cannot make a {general complaint} about a law or a measure.
+  
+  The Court is not a court of appeal from national courts and cannot annul or alter their decisions. 
   
   You said you were not directly and personally the victim of the violation you are alleging.
   
@@ -216,6 +260,10 @@ subquestion: |
   You said the final decision at the domestic level was taken before **${ format_date( current_datetime() - date_interval(months=6) ) }**. That was more than 6 months ago.
   
   Under [Rule 47](https://www.echr.coe.int/Documents/Rule_47_ENG.pdf), the date your application is postmarked cannot be more than 6 months after the final decision at the domestic level was taken. For this calculation, we assume you plan to mail your application today, **${ current_datetime() }**. 
+  
+  The application form, together with all the required information and documents, must be dispatched to the Court **on or before the final day of the six month period**.
+  
+  There is no guarantee that if an application form is rejected as incomplete there will be enough time for you to submit a new application before the six-month time-limit. For that reason, you should take care to submit a complete application form together with all the necessary supporting documents.
     
   You can still proceed with your application, but it may be deemed inadmissable.
 terms:
@@ -277,7 +325,13 @@ fields:
 ---
 id:  state(s)
 question: |
-  Select the State(s) against which the application is directed
+  Select the State(s) against which your complaint(s) are directed
+subquestion: |
+  This section concerns the State(s) which you consider responsible for the matters about which you are complaining. 
+  
+  Complaints before the Court can be brought only against the countries listed, which have all joined the Convention system.
+
+  Your complaints must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
 fields:
   - no label: states_against
     datatype: checkboxes
@@ -335,26 +389,40 @@ id: statement of facts
 question: |
   Statement of Facts 
 subquestion: |
-  In {chronological} order, state the facts relevant to your complaint.
+  In {chronological} order, state the facts relevant to your complaint. Give exact dates. 
   
-  Do not simply to refer to attached sheets. 
+  If your complaints relate to {a number of different matters}, please deal with each factual matter separately.
+  
+  **Do not simply to refer to attached sheets.**
+  
+  You must provide documents to support your case, in particular copies of {relevant decisions or documentary records} of any measures about which you complain. 
+  
+  You must also provide {documentary evidence} to support your claims. If you cannot obtain copies of particular documents, you should explain why not.
 fields: 
   - no label: statement_of_facts
     datatype: area 
 terms:
   chronological: |
     The order in which the events occurred.
+  a number of different matters: |
+    For example, different sets of court proceedings.
+  relevant decisions or documentary records: |
+    For example, a notice of eviction or a deportation order.
+  documentary evidence: |   
+    Such as medical reports, witness statements, transcripts, documents of title to property, or records of periods spent in custody.
 ---
 objects:
   - article_invoked: DADict.using(auto_gather=False)
 ---
 id: articles concerned
 question: |
-  Select the Articles of the Convention that your application concerns. 
+  Select the Article(s) of the Convention or Protocol(s) that your application concerns
 subquestion: |
-  You cannot complain of a violation of any legal instrument other than the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf). 
+  You cannot complain of a violation of any legal instrument other than the [European Convention on Human Rights](https://www.echr.coe.int/Documents/Convention_ENG.pdf) and its Protocols. 
   
-  In order to be admissible, you should have exhausted all available domestic remedies in ${ states_against.true_values() } regarding your complaint(s). 
+  You should have exhausted all available domestic remedies in ${ states_against.true_values() } regarding your complaint(s).
+  
+  Your complaint(s) must be based on solid evidence. You have to substantiate your claim(s) by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
 fields: 
   - Article 2, the right to life: article_invoked["article_two"]
     datatype: yesno
@@ -407,16 +475,22 @@ id: article 2
 question: |
   Article 2
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-    
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 2 was violated: article_two_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 2: article_two_compliance
     datatype: area
 terms:
@@ -427,16 +501,22 @@ id: article 3
 question: |
   Article 3
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 3 was violated: article_three_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 3: article_three_compliance
     datatype: area
 terms:
@@ -447,16 +527,22 @@ id: article 4
 question: |
   Article 4
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 4 was violated: article_four_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 4: article_four_compliance
     datatype: area
 terms:
@@ -467,16 +553,22 @@ id: article 5
 question: |
   Article 5
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 5 was violated: article_five_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 5: article_five_compliance
     datatype: area
 terms:
@@ -487,16 +579,22 @@ id: article 6
 question: |
   Article 6
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 6 was violated: article_six_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 6: article_six_compliance
     datatype: area
 terms:
@@ -507,16 +605,22 @@ id: article 7
 question: |
   Article 7
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 7 was violated: article_seven_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 7: article_seven_compliance
     datatype: area
 terms:
@@ -527,16 +631,22 @@ id: article 8
 question: |
   Article 8
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 8 was violated: article_eight_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 8: article_eight_compliance
     datatype: area
 terms:
@@ -547,16 +657,22 @@ id: article 9
 question: |
   Article 9
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 9 was violated: article_nine_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 9: article_nine_compliance
     datatype: area
 terms:
@@ -567,16 +683,22 @@ id: article 10
 question: |
   Article 10
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 10 was violated: article_ten_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 10: article_ten_compliance
     datatype: area
 terms:
@@ -587,16 +709,22 @@ id: article 11
 question: |
   Article 11
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 11 was violated: article_eleven_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 11: article_eleven_compliance
     datatype: area
 terms:
@@ -607,16 +735,22 @@ id: article 12
 question: |
   Article 12
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 12 was violated: article_twelve_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 12: article_twelve_compliance
     datatype: area
 terms:
@@ -627,16 +761,22 @@ id: article 13
 question: |
   Article 13
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 13 was violated: article_thirteen_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 13: article_thirteen_compliance
     datatype: area
 terms:
@@ -647,16 +787,22 @@ id: article 14
 question: |
   Article 14
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Article 14 was violated: article_fourteen_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Article 14: article_fourteen_compliance
     datatype: area
 terms:
@@ -667,16 +813,22 @@ id: protocol 1, article 1
 question: |
   Protocol 1, Article 1
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Protocol 1, Article 1 was violated: pro_article_one_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 1: pro_article_one_compliance
     datatype: area
 terms:
@@ -687,16 +839,22 @@ id: protocol 1, article 2
 question: |
   Protocol 1, Article 2
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Protocol 1, Article 2 was violated: pro_article_two_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 2: pro_article_two_compliance
     datatype: area
 terms:
@@ -707,16 +865,22 @@ id: protocol 1, article 3
 question: |
   Protocol 1, Article 3
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Protocol 1, Article 3 was violated: pro_article_three_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Protocol 1, Article 3: pro_article_three_compliance
     datatype: area
 terms:
@@ -727,16 +891,22 @@ id: protocol 13
 question: |
   Protocol 13
 subquestion: |
-  For each article you are complaining under, describe your compliance with the Court's requirements that you:
+  **Explain what your complaint under the Convention is and why the facts that you have set out entail a violation of this Article.**
+
+  Your complaint must be based on solid evidence. You have to substantiate your claims by telling your story clearly and supporting it with documents, decisions, medical reports, witness statements, and other material.
   
-    1. Exhaust all domestic remedies, including appeals, and include the date any {final decision} was delivered and received.
-    
-    2. Apply within 6 months of the {final decision} at the domestic level.
-        
-  **All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.**
+  All of the information referred to should be sufficient to enable the Court to determine the nature and scope of the application without reference to any other documents.
 fields: 
   - Explain how Protocol 13 was violated: pro_thirteen_explanation
     datatype: area
+  - note: |
+      **When describing your compliance with the Court's requirements, state the following:**
+      
+      1. the exact date of the final decision, the name of the court or tribunal and the nature of the decision;
+      
+      2. the dates of the other lower court or tribunal decisions leading up to the final decision; and
+      
+      3. the case file number in the domestic proceedings.
   - Explain how you complied with the Court's requirements regarding your complaint under Protocol 13: pro_thirteen_compliance
     datatype: area
 terms:
@@ -764,10 +934,13 @@ fields:
   - note: |
       **Give a summary of the procedure.**[BR] 
       
-      Include:[BR] 
-        - the complaints submitted,[BR] 
-        - name of the international body, and[BR] 
-        - date and nature of any decisions.
+      Include:
+      
+        1. the complaints submitted,
+        
+        2. name of the international body, and
+        
+        3. date and nature of any decisions.
     show if: 
       variable: another_procedure_yesno
       is: True
@@ -817,10 +990,12 @@ subquestion: |
   You must also include the relevant documents: 
 
     - relating to the decisions or measures complained of;
-    - showing that the applicant has complied with the exhaustion of available domestic remedies and the time-limit contained in Article 35 § 1 of the Convention;
+    - showing that you complied with the exhaustion of available domestic remedies and the 6 month time-limit contained in Article 35 § 1 of the Convention;
     - showing, where applicable, information regarding other international proceedings.
 
-  If you are unable to provide a copy of any of these documents, you must provide an adequate explanation for why you cannot. Merely stating that you encountered difficulties in obtaining the documents will not suffice if it can be {reasonably expected} for the explanation to be supported by documentary evidence. If the explanation is not forthcoming or adequate, the application will not be allocated to a judicial formation.
+  If you are unable to provide a copy of any of these documents, you must provide an adequate explanation for why you cannot. Merely stating that you encountered difficulties in obtaining the documents will not suffice if it can be {reasonably expected} for the explanation to be supported by documentary evidence. 
+  
+  If you do not provide one or more of the necessary documents your application will not be regarded as complete and it will not be examined by the Court, unless you have given an adequate explanation of why you were unable to provide the missing document(s).
 fields:
   - Documents: applicant_document
     datatype: file
@@ -838,7 +1013,7 @@ fields:
   - Have you already received a sheet of barcode labels from the European Court of Human Rights?: barcode 
     datatype: yesnoradio
   - note: |
-      Before sending this form to the Court, attach one barcode label at the top of the first page. It looks like this: 
+      If you have already been in correspondence with the Court on this same matter and have been given a set of barcode labels, you should stick a barcode label in the box on the left-hand side near the top of the first page of the application form. It looks like this: 
       
       ${ barcode_label.show(width='30em') }
     show if:
@@ -878,9 +1053,13 @@ terms:
 id: download final form
 event: download
 question: |
-  Here is your Application to the European Court of Human Rights.   
+  ${ ECHR_logo.show(width='20em') }  
 subquestion: |
-  You need to print and mail your application to the Court: 
+  **Here is your Application to the European Court of Human Rights** 
+ 
+  ${ Application_Form_ENG_download }
+ 
+  **You need to print and mail your application to the Court:**
   
   The Registrar[BR]
   European Court of Human Rights[BR]
@@ -888,14 +1067,19 @@ subquestion: |
   67075 STRASBOURG CEDEX[BR]
   FRANCE[BR]
   
+  Your application must be sent to the Court on or before the final day of the six month period after the final decision at the domestic level.
+    
+  Keep a copy of the form, together with the original documents, so that if the Registry informs you that the application was incomplete you will be able, if you wish, to resubmit a new and complete application without difficulty or undue delay.
+
   You must keep the Court informed of any change of address and of all circumstances relevant to your application.
   
   The Registry may ask you for additional documents, information or explanations relating to your complaints.
   
   Failure, within the specified time-limit, to provide further information or documents at the Court’s request or to comply with the Court’s directions as to the form or manner of the lodging of an application may result in the complaint(s) not being examined by the Court or the application(s) being declared inadmissible or struck out of the Court’s list of cases.
+    
+  Your case will be dealt with free of charge. 
   
-  ${ Application_Form_ENG_download }
-
+  You will automatically be informed of any decision taken by the Court.
 buttons:
   - Exit: exit
   - Restart: restart
