@@ -1,4 +1,14 @@
 ---
+metadata:
+  title: |
+    Individual Application to the ECHR
+  short title: |
+    ECHR Application
+  description: |
+    Application to the ECHR for pro se individual applicant
+  author:
+    - name: Mia Bonardi
+---
 id: interview order
 mandatory: True
 code: |
@@ -72,7 +82,7 @@ code: |
 ---
 id: info screen
 question: |
-  ${ ECHR_logo.show(width='20em') }
+  ${ ECHR_logo.show(width='18em') }
 subquestion: |
   **Individual Application to the European Court of Human Rights**
   
@@ -102,7 +112,7 @@ objects:
 ---
 id: more info 
 question: |
-  ${ ECHR_logo.show(width='20em') }
+  ${ ECHR_logo.show(width='18em') }
 subquestion: |
   **Applying to the Court**
   
@@ -1053,7 +1063,7 @@ terms:
 id: download final form
 event: download
 question: |
-  ${ ECHR_logo.show(width='20em') }  
+  ${ ECHR_logo.show(width='18em') } 
 subquestion: |
   **Here is your Application to the European Court of Human Rights** 
  
