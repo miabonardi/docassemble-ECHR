@@ -1065,7 +1065,7 @@ event: download
 question: |
   ${ ECHR_logo.show(width='18em') } 
 subquestion: |
-  **Here is your Application to the European Court of Human Rights** 
+  **Here is your Application to the European Court of Human Rights:** 
  
   ${ Application_Form_ENG_download }
  
